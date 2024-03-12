@@ -1,0 +1,38 @@
+```javascript
+const crypto = require('crypto');
+const fs = require('fs');
+
+class IPFSEncryption {
+    constructor(algorithm = 'aes-256-ctr') {
+        this.algorithm = algorithm;
+    }
+
+    encrypt(data, key) {
+        const cipher = crypto.createCipher(this.algorithm, key);
+        let encrypted = cipher.update(data, 'utf8', 'hex');
+        encrypted += cipher.final('hex');
+        return encrypted;
+    }
+
+    decrypt(encryptedData, key) {
+        const decipher = crypto.createDecipher(this.algorithm, key);
+        let decrypted = decipher.update(encryptedData, 'hex', 'utf8');
+        decrypted += decipher.final('utf8');
+        return decrypted;
+    }
+
+    encryptFile(filePath, key) {
+        const data = fs.readFileSync(filePath, 'utf8');
+        const encryptedData = this.encrypt(data, key);
+        fs.writeFileSync(filePath, encryptedData);
+    }
+
+    decryptFile(filePath, key) {
+        const encryptedData = fs.readFileSync(filePath, 'utf8');
+        const decryptedData = this.decrypt(encryptedData, key);
+        fs.writeFileSync(filePath, decryptedData);
+    }
+}
+
+module.exports = IPFSEncryption;
+```

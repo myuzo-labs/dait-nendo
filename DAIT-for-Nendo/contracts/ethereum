@@ -1,0 +1,21 @@
+```solidity
+// SPDX-License-Identifier: MIT
+pragma solidity >=0.4.22 <0.9.0;
+
+import "../federated_learning/model/Model.sol";
+
+contract EthereumContract {
+    address public owner;
+    Model public model;
+
+    constructor(Model _model) public {
+        owner = msg.sender;
+        model = _model;
+    }
+
+    function updateModel(Model _model) public {
+        require(msg.sender == owner, "Only the contract owner can update the model");
+        model = _model;
+    }
+}
+```

@@ -1,0 +1,29 @@
+```python
+import flwr as fl
+from DAIT_for_Nendo.federated_learning.model import Model
+
+class FLClient(fl.client.NumPyClient):
+    def __init__(self, model):
+        self.model = model
+
+    def get_parameters(self):
+        return self.model.get_weights()
+
+    def set_parameters(self, weights):
+        self.model.set_weights(weights)
+
+    def fit(self, parameters, config):
+        self.set_parameters(parameters)
+        self.model.train()
+        return self.get_parameters(), len(self.model.data), {}
+
+    def evaluate(self, parameters, config):
+        self.set_parameters(parameters)
+        loss, accuracy = self.model.evaluate()
+        return loss, len(self.model.data), {"accuracy": accuracy}
+
+if __name__ == "__main__":
+    model = Model()
+    fl_client = FLClient(model)
+    fl.client.start_numpy_client("[::]:8080", client=fl_client)
+```

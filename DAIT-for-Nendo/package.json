@@ -1,0 +1,32 @@
+{
+  "name": "DAIT-for-Nendo",
+  "version": "1.0.0",
+  "description": "Decentralized AI Training for Nendo",
+  "main": "index.js",
+  "scripts": {
+    "setup": "bash scripts/setup.sh",
+    "deploy": "bash scripts/deploy.sh",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yourusername/DAIT-for-Nendo.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yourusername/DAIT-for-Nendo/issues"
+  },
+  "homepage": "https://github.com/yourusername/DAIT-for-Nendo#readme",
+  "dependencies": {
+    "flower": "^0.10.1",
+    "ipfs": "^0.55.2",
+    "cosmos-sdk": "^0.44.0",
+    "ethereumjs-util": "^7.1.0",
+    "jest": "^27.2.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "prettier": "^2.4.1"
+  }
+}

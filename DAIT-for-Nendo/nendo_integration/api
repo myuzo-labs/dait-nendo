@@ -1,0 +1,36 @@
+```javascript
+const axios = require('axios');
+const { NENDO_API_KEY, NENDO_API_URL } = require('../utils/config');
+
+class NendoAPI {
+  constructor() {
+    this.api = axios.create({
+      baseURL: NENDO_API_URL,
+      headers: {
+        'Authorization': `Bearer ${NENDO_API_KEY}`,
+        'Content-Type': 'application/json'
+      }
+    });
+  }
+
+  async getLearningData() {
+    try {
+      const response = await this.api.get('/learningData');
+      return response.data;
+    } catch (error) {
+      console.error(`Error fetching learning data: ${error}`);
+    }
+  }
+
+  async postLearningResults(results) {
+    try {
+      const response = await this.api.post('/learningResults', results);
+      return response.data;
+    } catch (error) {
+      console.error(`Error posting learning results: ${error}`);
+    }
+  }
+}
+
+module.exports = NendoAPI;
+```

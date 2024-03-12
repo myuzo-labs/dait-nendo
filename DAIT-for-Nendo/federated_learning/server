@@ -1,0 +1,13 @@
+```python
+import flwr as fl
+from .model import SharedModel
+
+# Create strategy
+strategy = fl.server.strategy.FedAvg()
+
+# Load shared model
+shared_model = SharedModel()
+
+# Start Flower server for federated learning
+fl.server.start_server("[::]:8080", config={"num_rounds": 100}, strategy=strategy, model=shared_model)
+```

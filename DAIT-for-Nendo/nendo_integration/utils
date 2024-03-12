@@ -1,0 +1,48 @@
+```javascript
+// Importing required modules
+const axios = require('axios');
+const fs = require('fs');
+const path = require('path');
+
+// Utility function to make API calls
+async function makeApiCall(url, method, data) {
+    try {
+        const response = await axios({
+            method: method,
+            url: url,
+            data: data
+        });
+        return response.data;
+    } catch (error) {
+        console.error(`Error in API call: ${error}`);
+        throw error;
+    }
+}
+
+// Utility function to read file
+function readFile(filePath) {
+    try {
+        const data = fs.readFileSync(path.resolve(__dirname, filePath), 'utf8');
+        return data;
+    } catch (error) {
+        console.error(`Error reading file: ${error}`);
+        throw error;
+    }
+}
+
+// Utility function to write file
+function writeFile(filePath, data) {
+    try {
+        fs.writeFileSync(path.resolve(__dirname, filePath), data, 'utf8');
+    } catch (error) {
+        console.error(`Error writing file: ${error}`);
+        throw error;
+    }
+}
+
+module.exports = {
+    makeApiCall,
+    readFile,
+    writeFile
+};
+```
