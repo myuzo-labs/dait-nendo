@@ -1,0 +1,37 @@
+```python
+import unittest
+from DAIT-for-Nendo.federated_learning.client import FLClient
+from DAIT-for-Nendo.federated_learning.server import FLServer
+from DAIT-for-Nendo.federated_learning.model import FLModel
+
+class TestFederatedLearning(unittest.TestCase):
+
+    def setUp(self):
+        self.client = FLClient()
+        self.server = FLServer()
+        self.model = FLModel()
+
+    def test_client_initialization(self):
+        self.assertIsNotNone(self.client, "Client initialization failed.")
+
+    def test_server_initialization(self):
+        self.assertIsNotNone(self.server, "Server initialization failed.")
+
+    def test_model_initialization(self):
+        self.assertIsNotNone(self.model, "Model initialization failed.")
+
+    def test_model_training(self):
+        initial_weights = self.model.get_weights()
+        self.client.train(self.model)
+        updated_weights = self.model.get_weights()
+        self.assertNotEqual(initial_weights, updated_weights, "Model weights did not update after training.")
+
+    def test_model_update(self):
+        initial_weights = self.model.get_weights()
+        self.server.update_model(self.model)
+        updated_weights = self.model.get_weights()
+        self.assertNotEqual(initial_weights, updated_weights, "Model weights did not update after server update.")
+
+if __name__ == '__main__':
+    unittest.main()
+```

@@ -1,0 +1,40 @@
+```javascript
+import React from 'react';
+import { FederatedLearningModel } from '../../federated_learning/model';
+import { NendoAPI } from '../api';
+
+class NendoUI extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            model: new FederatedLearningModel(),
+            trainingStatus: 'Not started',
+        };
+    }
+
+    componentDidMount() {
+        NendoAPI.getModel().then(model => {
+            this.setState({ model });
+        });
+    }
+
+    startTraining = () => {
+        this.setState({ trainingStatus: 'In progress' });
+        NendoAPI.startTraining(this.state.model).then(() => {
+            this.setState({ trainingStatus: 'Completed' });
+        });
+    }
+
+    render() {
+        return (
+            <div>
+                <h1>Nendo Federated Learning UI</h1>
+                <p>Training Status: {this.state.trainingStatus}</p>
+                <button onClick={this.startTraining}>Start Training</button>
+            </div>
+        );
+    }
+}
+
+export default NendoUI;
+```

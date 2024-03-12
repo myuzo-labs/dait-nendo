@@ -1,0 +1,28 @@
+```javascript
+const IPFS = require('ipfs');
+const node = await IPFS.create();
+
+class DataManagement {
+    constructor() {
+        this.node = node;
+    }
+
+    async addData(data) {
+        const { cid } = await this.node.add(data);
+        return cid.toString();
+    }
+
+    async getData(cid) {
+        const stream = this.node.cat(cid);
+        let data = '';
+
+        for await (const chunk of stream) {
+            data += chunk.toString();
+        }
+
+        return data;
+    }
+}
+
+module.exports = DataManagement;
+```
